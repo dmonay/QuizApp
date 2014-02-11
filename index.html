@@ -4,18 +4,28 @@
 	<meta charset="UTF-8">
 	<title>D$ Quiz App</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="quiz_details.js"></script>
     <script type="text/javascript" src="quiz.js"></script>
 	<link rel="stylesheet" type="text/css" href="quiz_style.css">
-    <link href='http://fonts.googleapis.com/css?family=Nixie+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Averia+Sans+Libre' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/ui-lightness/jquery-ui-1.10.4.custom.css" />
+    <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
 	
 </head>
 <body>
-	<h1>The Whiskey Quiz</h1>
-    <input type="button" id="new"/>
-    <h4 class="question"></h4>
-    <ul class="answers"></ul>
-    <h3 class="explanation"></h3>
-	
+    <div id="content" class="initial_content">
+	   <h1>The Whiskey Quiz</h1>
+        <div id="first_button"><input type="button" id="new" value="New Quiz"/></div>
+    
+            <div id="main_area" class="hidden">
+                <h4 class="question"></h4>
+                <ol type="a" class="answers" ></ol>
+                <h3 class="explanation"></h3>
+            
+                <div id="next">Next</div>
+            </div>
+    </div>
 	
 </body>
 </html>

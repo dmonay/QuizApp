@@ -1,0 +1,35 @@
+body {
+    width:100%;
+    height: 100%;
+    background-color:#dfe7ea;
+    padding:0;
+    margin:0;
+    font-family: 'Averia Sans Libre', cursive;
+    
+    
+}
+
+#content{
+    width:80%;
+    height:600px;
+    margin:0 auto;
+    border-radius: 30px;
+    text-align: center;
+    background-color: #4a4b4e;
+    color:#dfe7ea;
+}
+
+.visible {display:block;}
+.hidden {display:none;}
+
+#next{
+    width:60px;
+    height:30px;
+    border-radius: 5px;
+    text-align: center;
+    padding-top: 9px;
+    background-color: blue;
+    font-size: 21px;
+    cursor: pointer;
+    margin:0 auto;
+    }
