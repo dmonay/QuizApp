@@ -5,9 +5,7 @@ var counterForSubmit = -1;
 var counterForNext = 0;
 var answer = "";
 
-$(document).ready(function () {
-  
-    
+$(document).ready(function () {    
 
     //convert array of answers into list elements:    
     function cList(x){
@@ -28,8 +26,7 @@ $(document).ready(function () {
     
     var initiate = function () {
         $("#first_button").remove();
-        $("#question_area").removeClass();
-        $("#question_area").addClass("visible");
+        $("#question_area").removeClass().addClass("visible");
         
         $('body').animate({
             backgroundColor: '#020202',           
@@ -45,17 +42,10 @@ $(document).ready(function () {
     
     var finish = function() {
         $("ol").empty();
-        $("#question_area").removeClass();
-        $("#question_area").addClass("hidden");
-        $("#answer_area").removeClass();
-        $("#answer_area").addClass("visible"); 
-        
-        $("#next").removeClass();
-        $("#next").addClass("hidden");
-        
-        $("#new_game").removeClass("hidden");
-        $("#new_game").addClass("visible");
-        
+        $("#question_area").removeClass().addClass("hidden");
+        $("#answer_area").removeClass().addClass("visible");         
+        $("#next").removeClass().addClass("hidden");        
+        $("#new_game").toggleClass("hidden visible");        
         check();
         $(".explanation").html(explanationArray[counterForSubmit]);
         
@@ -68,25 +58,22 @@ $(document).ready(function () {
             counter--;
         }
         else if (counterForSubmit == 4) {finish();}
+        
         else {
+        $("#next").removeClass().addClass("button visible");
         $("ol").empty();
-        $("#question_area").removeClass();
-        $("#question_area").addClass("hidden");
-        $("#answer_area").removeClass();
-        $("#answer_area").addClass("visible");     
+        $("#question_area").removeClass().addClass("hidden");
+        $("#answer_area").removeClass().addClass("visible");     
         check();
         $(".explanation").html(explanationArray[counterForSubmit]);
-        }
+              }
     };
 
     var nextQuestion = function() {
         counterForNext++;
         $("ol").empty();
-        $("#answer_area").removeClass();
-        $("#answer_area").addClass("hidden");
-        $("#question_area").removeClass();
-        $("#question_area").addClass("visible");
-        
+        $("#answer_area").removeClass().addClass("hidden");
+        $("#question_area").removeClass().addClass("visible");        
         $(".question").html(questionArray[counterForNext]);
         cList(counterForNext);
 
@@ -112,12 +99,9 @@ $(document).ready(function () {
         counterForSubmit = -1;
         counterForNext = 0;
         answer = "";
-        $("#answer_area").empty();
-        $("#new_game").removeClass("visible");
-        $("#new_game").addClass("hidden");
-       
-        $("#question_area").removeClass();
-        $("#question_area").addClass("visible");
+        $("#verdict, .explanation").empty();
+        $("#new_game").toggleClass("visible hidden");       
+        $("#question_area").removeClass().addClass("visible");
         start();
     };
     
