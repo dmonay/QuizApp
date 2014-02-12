@@ -27,7 +27,10 @@ answerArray[2]= ["aa","bb","cc","dd"];
         
         
         
-        
+  var correctArray = [];
+correctArray[0] = answerArray[0][3];
+correctArray[1] = answerArray[1][2];
+correctArray[2] = answerArray[2][0];
 //EXPLANATIONS
         
 var explanationArray = [];

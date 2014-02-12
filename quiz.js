@@ -1,44 +1,31 @@
 /*jslint browser: true*/
 /*global $, jQuery*/
 
-var counter = 0;
-
-   
+var counterForSubmit = 0;
+var counterForNext = 0;
+var answer = "";
 $(document).ready(function () {
   
     
 
     //convert array of answers into list elements:
-/*    var cList = function (x) { $('ol.answers').each(answerArray[x], function (i) {
-        var li = $('<li/>')
-            .addClass('ind_answer')
-            .text(answerArray[x][i])
-            .appendTo(cList(x));   
-    }); }; 
-*/
     
-    var cList = $('ol.answers')
-$.each(answerArray[0], function(i)
-{
-    var li = $('<li/>')
-        .addClass('ind_answers')
-        .text(answerArray[0][i])
-        .appendTo(cList);
-
-});
+    function cList(x){ 
+        $.each(answerArray[x], function(i)
+               { $('ol.answers').append("<li class='new_item'> <input type='radio' class='box'/> <span class='the_real_item'>"                  + answerArray[x][i] + "</span></li>");
+                });
+    }
     
     
     var start = function () {
         $(".question").html(questionArray[0]);
-        // cList(0);
-        cList();
-        $(".explanation").html(explanationArray[0]);
+        cList(0);
     };
     
     var initiate = function () {
         $("#first_button").remove();
-        $("#main_area").removeClass();
-        $("#main_area").addClass("visible");
+        $("#question_area").removeClass();
+        $("#question_area").addClass("visible");
         
         $('body').animate({
             backgroundColor: '#020202',           
@@ -52,21 +39,33 @@ $.each(answerArray[0], function(i)
         start();
     };
     
-    var nextQuestion = function() {
-        counter++;
-        $("h4 ul h3").empty();
+    var evaluate = function() {
+        counterForSubmit++;
+        $("ol").empty();
+        $("#question_area").removeClass();
+        $("#question_area").addClass("hidden");
+        $("#answer_area").removeClass();
+        $("#answer_area").addClass("visible");
+    
         
-        $(".question").html(questionArray[counter]);
-        cList(counter);
-        $(".explanation").html(explanationArray[counter]);
+       
+        alert(answer);
+        $(".explanation").html(explanationArray[counterForSubmit]);
+        
     };
-    
-    var test = function() {alert(answerArray[0][0]);};
-    
-    //clicking the "New Quiz" button:
-    $("#new").click(initiate);
-    //clicking "Next" button:
-    $("#next").click(nextQuestion);
+
+    var nextQuestion = function() {
+        counterForNext++;
+        $("ol").empty();
+        $("#answer_area").removeClass();
+        $("#answer_area").addClass("hidden");
+        $("#question_area").removeClass();
+        $("#question_area").addClass("visible");
+        
+        $(".question").html(questionArray[counterForNext]);
+        cList(counterForNext);
+
+    };
     
     
     //pulsating button
@@ -83,4 +82,20 @@ $.each(answerArray[0], function(i)
     fadeButtonIn();
     });
     
+    
+    
+    
+    
+    //EVENT LISTENERS   
+    //clicking the "New Quiz" button:
+    $("#new").click(initiate);
+    //clicking "Submit" button:
+    $("#submit").click(evaluate);
+    //clicking "Next" button:
+    $("#next").click(nextQuestion);
+    //listen for user's selection of answer and update the global variable "answer"
+    $(document).on("click", "input:radio", function() {
+        answer = $(this).val();
+    });
+
 });
