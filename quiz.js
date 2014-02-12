@@ -1,21 +1,25 @@
 /*jslint browser: true*/
 /*global $, jQuery*/
 
-var counterForSubmit = 0;
+var counterForSubmit = -1;
 var counterForNext = 0;
 var answer = "";
+
 $(document).ready(function () {
   
     
 
-    //convert array of answers into list elements:
-    
-    function cList(x){ 
-        $.each(answerArray[x], function(i)
-               { $('ol.answers').append("<li class='new_item'> <input type='radio' class='box'/> <span class='the_real_item'>"                  + answerArray[x][i] + "</span></li>");
-                });
+    //convert array of answers into list elements:    
+    function cList(x){
+        $.each(answerArray[x], function(i){ 
+            $('ol.answers').append("<li class='new_item'> <input type='radio' class='box' value='"+i+"' name='question'/>                   <span class='the_real_item'>" + answerArray[x][i] + "</span></li>");
+        });
     }
     
+    var check = function() {         
+        if (correctArray[counterForSubmit] == answer) {$("#verdict").text("Correct!");}
+        else {$("#verdict").text("Incorrect");}
+    };
     
     var start = function () {
         $(".question").html(questionArray[0]);
@@ -39,19 +43,40 @@ $(document).ready(function () {
         start();
     };
     
-    var evaluate = function() {
-        counterForSubmit++;
+    var finish = function() {
         $("ol").empty();
         $("#question_area").removeClass();
         $("#question_area").addClass("hidden");
         $("#answer_area").removeClass();
-        $("#answer_area").addClass("visible");
-    
+        $("#answer_area").addClass("visible"); 
         
-       
-        alert(answer);
+        $("#next").removeClass();
+        $("#next").addClass("hidden");
+        
+        $("#new_game").removeClass("hidden");
+        $("#new_game").addClass("visible");
+        
+        check();
         $(".explanation").html(explanationArray[counterForSubmit]);
         
+    };
+    
+    var evaluate = function() {
+        counterForSubmit++;
+        if (! $("input").is(':checked')) {
+            alert("Select an answer please");
+            counter--;
+        }
+        else if (counterForSubmit == 4) {finish();}
+        else {
+        $("ol").empty();
+        $("#question_area").removeClass();
+        $("#question_area").addClass("hidden");
+        $("#answer_area").removeClass();
+        $("#answer_area").addClass("visible");     
+        check();
+        $(".explanation").html(explanationArray[counterForSubmit]);
+        }
     };
 
     var nextQuestion = function() {
@@ -71,31 +96,45 @@ $(document).ready(function () {
     //pulsating button
     
     function fadeButtonIn(){
-    $("#next").animate({backgroundColor: "#ed3" }, 4000, function(){fadeButtonOut();});
+    $("#next, #first_button, #submit, #new_game").animate({backgroundColor: "#ed3" }, 4000, function(){fadeButtonOut();});
     }
 
     function fadeButtonOut(){
-    $("#next").animate({backgroundColor: "#3de" }, 4000, function(){fadeButtonIn();});
+    $("#next, #first_button, #submit, #new_game").animate({backgroundColor: "#3de" }, 4000, function(){fadeButtonIn();});
     }
 
-    $(document).ready(function(){
+    
     fadeButtonIn();
-    });
     
+
     
+    var beginAnew = function() {
+        counterForSubmit = -1;
+        counterForNext = 0;
+        answer = "";
+        $("#answer_area").empty();
+        $("#new_game").removeClass("visible");
+        $("#new_game").addClass("hidden");
+       
+        $("#question_area").removeClass();
+        $("#question_area").addClass("visible");
+        start();
+    };
     
     
     
     //EVENT LISTENERS   
     //clicking the "New Quiz" button:
-    $("#new").click(initiate);
+    $("#first_button").click(initiate);
     //clicking "Submit" button:
     $("#submit").click(evaluate);
     //clicking "Next" button:
     $("#next").click(nextQuestion);
     //listen for user's selection of answer and update the global variable "answer"
     $(document).on("click", "input:radio", function() {
-        answer = $(this).val();
+        answer = $(this).val();    
     });
+    //start a new game:
+    $("#new_game").click(beginAnew);
 
 });
